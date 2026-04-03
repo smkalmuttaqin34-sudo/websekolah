@@ -3,47 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baca Berita - SMK ALMUTTAQIN</title>
-    <link rel="icon" href="https://ik.imagekit.io/maihfdgfn5/logobutuhanremove_wdo1Icl6Y.png?updatedAt=1768833203647">
+    <title>Baca Berita - SMK AL MUTTAQIN</title>
+    
+    <link rel="icon" href="https://ik.imagekit.io/p68nayrnd/Logo%20Almuttaqin.png?updatedAt=1775202955448">
+    <link rel="apple-touch-icon" href="https://ik.imagekit.io/p68nayrnd/Logo%20Almuttaqin.png?updatedAt=1775202955448">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://ik.imagekit.io">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
-        tailwind.config = { theme: { extend: { colors: { primary: '#038a47', secondary: '#43ad35', accent: '#fdc600', darktext: '#3b3d42' }, fontFamily: { sans: ['Poppins', 'sans-serif'] } } } }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#038a47',    
+                        secondary: '#43ad35',  
+                        accent: '#fdc600',     
+                        darktext: '#3b3d42'    
+                    },
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] }
+                }
+            }
+        }
     </script>
 </head>
-<body class="bg-gray-50 text-darktext font-sans antialiased overflow-x-hidden">
+<body class="bg-gray-50 text-darktext font-sans antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+    
+    <div id="preloader" class="hidden fixed inset-0 z-[99999] bg-primary flex-col items-center justify-center transition-opacity duration-500">
+        <div class="bg-white p-4 rounded-full mb-5 shadow-2xl animate-bounce" style="animation-duration: 2s;">
+            <img src="https://ik.imagekit.io/p68nayrnd/Logo%20Almuttaqin.png?updatedAt=1775202955448" alt="Logo SMK Al Muttaqin" class="h-16 w-16 object-contain">
+        </div>
+        <h2 class="text-white text-2xl font-bold tracking-widest mb-3 drop-shadow-md">SMK AL MUTTAQIN</h2>
+        <div class="flex gap-3 mb-6">
+            <div class="w-3 h-3 bg-accent rounded-full animate-ping"></div>
+            <div class="w-3 h-3 bg-accent rounded-full animate-ping" style="animation-delay: 0.2s"></div>
+            <div class="w-3 h-3 bg-accent rounded-full animate-ping" style="animation-delay: 0.4s"></div>
+        </div>
+    </div>
+    
+    <script>
+        const preloader = document.getElementById('preloader');
+        preloader.classList.remove('hidden');
+        preloader.classList.add('flex');
+        
+        window.addEventListener('load', function() {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        });
+    </script>
+
+    <div class="bg-primary text-white text-xs py-2 px-6 flex justify-between items-center hidden lg:flex border-b border-green-800">
+        <div class="flex gap-6 items-center max-w-[1200px] mx-auto w-full">
+            <span class="flex items-center gap-2"><i class="fas fa-phone-alt text-accent"></i> 0821-8344-6488</span>
+            <a href="mailto:smkalmuttaqin34@gmail.com" class="hover:text-accent transition flex items-center gap-2"><i class="far fa-envelope-open text-accent"></i> smkalmuttaqin34@gmail.com</a>
+            <span class="flex items-center gap-2 ml-auto font-medium">
+                <a href="index.html#fasilitas" class="hover:text-accent transition px-3 border-r border-green-700">Fasilitas</a>
+                <a href="#" class="hover:text-accent transition pl-3"><i class="fas fa-map-marker-alt text-accent mr-1"></i> Dente Teladas, Tulang Bawang</a>
+            </span>
+        </div>
+    </div>
 
     <nav class="bg-white shadow-sm sticky top-0 z-50 relative">
         <div class="max-w-[1200px] mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="index.html" class="flex items-center">
-                <img src="https://ik.imagekit.io/maihfdgfn5/ChatGPT_Image_26_Mar_2026__12.38.51-removebg-preview.png" alt="Logo SDN 2 Butuhan" class="h-10 md:h-12 w-auto object-contain">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="https://ik.imagekit.io/p68nayrnd/Logo%20Almuttaqin.png?updatedAt=1775202955448" alt="Logo SMK Al Muttaqin" class="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-sm">
+                <div>
+                    <h1 class="font-extrabold text-lg md:text-xl text-primary leading-none tracking-tight">SMK AL MUTTAQIN</h1>
+                    <p class="text-[9px] md:text-[10px] font-bold text-accent tracking-widest uppercase">Berbasis Taruna</p>
+                </div>
             </a>
+            
+            <button id="mobile-menu-btn" aria-label="Buka Menu Navigasi" class="lg:hidden text-primary text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+            
             <div class="hidden lg:flex gap-7 text-[15px] font-medium text-gray-600 items-center">
-                <a href="index.html" class="hover:text-primary transition">Beranda</a>
-                <a href="berita.html" class="text-primary border-b-2 border-primary pb-1">Berita</a>
+                <a href="index.html" class="hover:text-primary transition flex items-center gap-1">Beranda</a>
+                <a href="dokumen.html" class="hover:text-primary transition flex items-center gap-1">Kegiatan</a>
+                
+                <div class="relative group py-2">
+                    <button class="hover:text-primary transition flex items-center gap-1.5 focus:outline-none">
+                        Tentang Kami <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-gray-100 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 flex flex-col py-2">
+                        <a href="profil.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Profil Sekolah</a>
+                        <a href="visi-misi.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Visi dan Misi</a>
+                        <a href="prody.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Program Study</a>
+                        <a href="guru.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Guru SMK</a>
+                    </div>
+                </div>
+
+                <div class="relative group py-2">
+                    <button class="hover:text-primary transition flex items-center gap-1.5 focus:outline-none">
+                        Taruna Taruni <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-56 bg-white border border-gray-100 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 flex flex-col py-2">
+                        <a href="tata-tertib.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Tata Tertib</a>
+                        <a href="janji-setia.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Janji Setia Korp</a>
+                        <a href="taruna.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Profil Taruna</a>
+                        <a href="staf-batalyon.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Staf Batalyon</a>
+                        <a href="ekskul.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Ekstrakurikuler</a>
+                        <a href="pelantikan-1.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Pelantikan Bag 1</a>
+                        <a href="pelantikan-2.html" class="px-5 py-2.5 hover:bg-green-50 hover:text-primary transition text-sm">Pelantikan Bag 2</a>
+                    </div>
+                </div>
+                
+                <a href="berita.html" class="text-primary border-b-2 border-primary pb-1">Berita Utama</a>
             </div>
-            <a href="index.html" class="bg-gray-100 text-gray-600 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-primary hover:text-white transition"><i class="fas fa-home mr-2"></i>Kembali</a>
+            
+            <div class="hidden lg:flex gap-3">
+                <a href="berita.html" class="bg-gray-50 border border-gray-200 text-gray-600 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-primary hover:border-primary hover:text-white transition shadow-sm"><i class="fas fa-arrow-left mr-2"></i>Kembali</a>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 flex flex-col font-medium text-gray-600">
+            <a href="index.html" class="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition">Beranda</a>
+            <a href="dokumen.html" class="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition">Kegiatan</a>
+            
+            <div class="border-b border-gray-50">
+                <div class="px-6 py-4 flex justify-between items-center text-gray-600 hover:text-primary transition bg-white">
+                    <span>Tentang Kami</span>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </div>
+                <div class="flex flex-col bg-gray-50/80 border-t border-gray-100">
+                    <a href="profil.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Profil Sekolah</a>
+                    <a href="visi-misi.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Visi dan Misi</a>
+                    <a href="prody.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Program Study</a>
+                    <a href="guru.html" class="px-10 py-3 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Guru SMK</a>
+                </div>
+            </div>
+
+            <div class="border-b border-gray-50">
+                <div class="px-6 py-4 flex justify-between items-center text-gray-600 hover:text-primary transition bg-white">
+                    <span>Taruna Taruni</span>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </div>
+                <div class="flex flex-col bg-gray-50/80 border-t border-gray-100">
+                    <a href="tata-tertib.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Tata Tertib</a>
+                    <a href="janji-setia.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Janji Setia</a>
+                    <a href="taruna.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Profil Taruna</a>
+                    <a href="staf-batalyon.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Staf Batalyon</a>
+                    <a href="ekskul.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Ekstrakurikuler</a>
+                    <a href="pelantikan-1.html" class="px-10 py-3 border-b border-gray-100 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Pelantikan Bag 1</a>
+                    <a href="pelantikan-2.html" class="px-10 py-3 hover:text-primary text-sm transition"><i class="fas fa-angle-right text-[10px] mr-2 text-primary"></i>Pelantikan Bag 2</a>
+                </div>
+            </div>
+            
+            <a href="berita.html" class="px-6 py-4 border-b border-gray-50 text-primary bg-green-50 font-bold transition">Berita Utama</a>
+            
+            <div class="px-6 py-5 flex flex-col gap-3 bg-gray-50 border-t border-gray-200">
+                <a href="ppdb.html" class="bg-accent text-darktext px-5 py-2.5 rounded-lg text-sm font-bold text-center shadow-sm border border-accent">Info PPDB</a>
+            </div>
         </div>
     </nav>
 
-    <main class="bg-white py-12 px-4 min-h-[75vh]">
-        <div class="max-w-[800px] mx-auto" id="artikel-container">
+    <main class="bg-white py-12 md:py-16 px-4 min-h-[75vh]">
+        <div class="max-w-[850px] mx-auto" id="artikel-container">
             <div class="text-center py-32 text-gray-400">
-                <i class="fas fa-spinner fa-spin text-5xl mb-4 text-primary"></i>
-                <p class="font-medium">Mempersiapkan artikel...</p>
+                <i class="fas fa-circle-notch fa-spin text-5xl mb-5 text-primary"></i>
+                <p class="font-medium tracking-wide">Mempersiapkan halaman artikel...</p>
             </div>
         </div>
     </main>
 
-    <footer class="bg-white border-t border-gray-200 py-8 text-center text-sm text-gray-500 font-medium">
-        &copy; <script>document.write(new Date().getFullYear())</script> SD NEGERI 2 BUTUHAN. All Rights Reserved.
+    <footer class="bg-slate-900 text-gray-300 pt-16 pb-8 border-t-4 border-accent mt-10">
+        <div class="max-w-[1200px] mx-auto px-4">
+            
+            <div class="text-center mb-12 border-b border-white/5 pb-10">
+                <p class="font-serif text-lg md:text-xl italic max-w-3xl mx-auto leading-relaxed text-gray-400">
+                    "Setiap langkah kecil yang kamu ambil saat ini akan membawamu lebih dekat dengan tujuanmu. Jadi, jangan pernah berhenti bergerak maju."
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12 mb-16">
+                <div class="flex flex-col gap-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://ik.imagekit.io/p68nayrnd/Logo%20Almuttaqin.png?updatedAt=1775202955448" alt="Logo SMK" class="w-14 h-14 object-contain brightness-110 drop-shadow-md">
+                        <div>
+                            <h3 class="text-xl font-bold text-white leading-tight">SMK AL MUTTAQIN</h3>
+                            <p class="text-[10px] font-bold text-accent tracking-widest uppercase">Tulang Bawang</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3 text-sm mt-2">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-accent mt-1 w-4 text-center"></i>
+                            <p class="leading-relaxed">Jl. Bratasena-Pasar Pasiran Jaya, Kec. Dente Teladas, Kab. Tulang Bawang, Lampung 34596</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-accent w-4 text-center"></i>
+                            <p>0821-8344-6488</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="far fa-envelope text-accent w-4 text-center"></i>
+                            <p>smkalmuttaqin34@gmail.com</p>
+                        </div>
+                        <div class="flex items-center gap-3 border-t border-white/5 pt-4 mt-2">
+                            <span class="bg-white/10 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider text-white">Akreditasi: C</span>
+                            <span class="bg-white/10 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider text-white">NPSN: 10814715</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-lg relative inline-block">
+                        Jelajahi & Ikuti Kami
+                        <span class="absolute -bottom-2 left-0 w-12 h-1 bg-accent rounded-full"></span>
+                    </h4>
+                    <div class="flex flex-wrap gap-3 mb-8">
+                        <a href="https://www.instagram.com/smkalmuttaqin?igsh=MW8xbXlxcDN6Z3VsbQ%3D%3D" target="_blank" title="Instagram Resmi" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all duration-300 shadow-sm"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@SMKAlMuttaqin" target="_blank" title="YouTube Channel" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all duration-300 shadow-sm"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@smkalmuttaqin0?_t=8jGdpewsYDZ&_r=1" target="_blank" title="TikTok Resmi" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 shadow-sm"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.instagram.com/ambalan_dipowi?igsh=dWs3c3Job2d6bWNu" target="_blank" title="Ambalan Dipowi" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-orange-600 hover:text-white transition-all duration-300 shadow-sm"><i class="fas fa-campground text-sm"></i></a>
+                        <a href="https://www.instagram.com/staf_batalyon_smk_almuttaqin?igsh=bmdybTdhbDB5cWls" target="_blank" title="Staf Batalyon" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm"><i class="fas fa-users text-sm"></i></a>
+                    </div>
+                    <ul class="grid grid-cols-2 gap-3 text-sm font-medium">
+                        <li><a href="index.html" class="hover:text-accent transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-gray-600"></i> Beranda</a></li>
+                        <li><a href="profil.html" class="hover:text-accent transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-gray-600"></i> Profil</a></li>
+                        <li><a href="prody.html" class="hover:text-accent transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-gray-600"></i> Jurusan</a></li>
+                        <li><a href="berita.html" class="hover:text-accent transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-gray-600"></i> Berita Utama</a></li>
+                        <li class="col-span-2 mt-1"><a href="https://sites.google.com/view/perpustakaan-almuttaqin" target="_blank" class="hover:text-accent transition flex items-center gap-2"><i class="fas fa-book-reader text-accent mr-1"></i> Kunjungi Pojok Baca</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-lg relative inline-block">
+                        Lokasi Sekolah
+                        <span class="absolute -bottom-2 left-0 w-12 h-1 bg-accent rounded-full"></span>
+                    </h4>
+                    <div class="w-full h-56 rounded-xl overflow-hidden shadow-2xl border border-white/10 group bg-gray-800">
+                        <iframe src="https://maps.google.com/maps?q=SMK%20Al%20Muttaqin,%20Dente%20Teladas,%20Tulang%20Bawang&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] font-medium text-gray-500 uppercase tracking-widest">
+                <p>© <script>document.write(new Date().getFullYear())</script> SMK AL MUTTAQIN TULANG BAWANG. All Rights Reserved.</p>
+                <div class="flex gap-6 items-center">
+                    <a href="admin.html" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-user-shield text-accent"></i> Admin Panel</a>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const SPREADSHEET_ID = '1iaxYuPTGrRSvg9P3AmAgnCj7xGvFi75pqTImB6lSl2c';
+            
+            // Script Menu Mobile Toggle
+            const btnMobile = document.getElementById('mobile-menu-btn');
+            const menuMobile = document.getElementById('mobile-menu');
+            if(btnMobile && menuMobile) {
+                btnMobile.addEventListener('click', function() {
+                    menuMobile.classList.toggle('hidden');
+                });
+            }
+
+            // GANTI SPREADSHEET ID SESUAI MILIK SMK AL MUTTAQIN
+            const SPREADSHEET_ID = '1lBKfUdhNqfC4G-ITNt9ecPAoi-BX_mZP2gLAvxxAxDY';
 
             async function gvizFetch(sheetName) {
                 try {
@@ -69,50 +290,95 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const judulParam = urlParams.get('judul');
 
-                if(!judulParam) { container.innerHTML = '<p class="text-center text-red-500 py-20 font-bold text-xl">Artikel tidak ditemukan.</p>'; return; }
+                // Jika url diakses langsung tanpa ada "?judul=...", tampilkan error.
+                if(!judulParam) { 
+                    container.innerHTML = `
+                    <div class="text-center py-20 bg-gray-50 rounded-3xl border border-gray-100 shadow-sm">
+                        <i class="fas fa-exclamation-circle text-6xl text-red-400 mb-6"></i>
+                        <h2 class="text-2xl font-bold text-darktext mb-2">Artikel Tidak Ditemukan</h2>
+                        <p class="text-gray-500 mb-8">Tautan berita yang Anda akses tidak lengkap atau tidak valid.</p>
+                        <a href="berita.html" class="bg-primary text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-700 transition">Kembali ke Daftar Berita</a>
+                    </div>`; 
+                    return; 
+                }
 
                 try {
                     const result = await gvizFetch("Berita");
                     if(result.status === "success") {
-                        // Cari baris berita yang judulnya cocok dengan URL
+                        
+                        // Cari baris berita yang judulnya cocok persis dengan parameter di URL
                         const artikel = result.data.find(item => {
                             const jdl = item.Judul || item.judul || item['Judul Berita'] || "";
                             return jdl === judulParam;
                         });
 
                         if(artikel) {
-                            const judul = artikel.Judul || artikel.judul || "Tanpa Judul";
+                            const judul = artikel.Judul || artikel.judul || "Berita Pendidikan";
                             const penulis = artikel.Penulis || artikel.penulis || "Admin";
-                            let tanggal = artikel.Tanggal || artikel.tanggal || "-";
-                            if(tanggal !== "-") { const d = new Date(tanggal); if(!isNaN(d)) tanggal = d.toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'}); }
                             
-                            // AMBIL ISI BERITA DAN UBAH ENTER JADI PARAGRAF BARU
-                            let isiBerita = artikel['Isi Berita'] || artikel.Isi || artikel.isi || artikel.Ringkasan || "Konten belum ditambahkan.";
+                            // Penyesuaian Format Tanggal
+                            let tanggal = artikel.Tanggal || artikel.tanggal || "-";
+                            if(tanggal !== "-") { 
+                                const d = new Date(tanggal); 
+                                if(!isNaN(d)) tanggal = d.toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'}); 
+                            }
+                            
+                            // AMBIL ISI BERITA DAN UBAH [ENTER] DI EXCEL MENJADI PARAGRAF HTML
+                            let isiBerita = artikel['Isi Berita'] || artikel.Isi || artikel.isi || artikel.Ringkasan || "<p>Konten artikel belum ditambahkan ke dalam database.</p>";
+                            // Ini kunci untuk merapikan paragraf: mengganti ganti-baris menjadi spasi antar paragraf.
                             isiBerita = isiBerita.replace(/\n/g, '<br><br>');
 
+                            // Jika foto kosong, berikan gambar cadangan.
                             const foto = artikel.Foto || artikel.foto || artikel['Link Foto'] || "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=800&auto=format&fit=crop";
 
+                            // Inject HTML ke Kontainer
                             container.innerHTML = `
-                                <div class="mb-6">
-                                    <a href="berita.html" class="text-primary font-semibold hover:underline flex items-center gap-2"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Berita</a>
+                                <div class="mb-8">
+                                    <a href="berita.html" class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-colors shadow-sm"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Berita</a>
                                 </div>
-                                <h1 class="text-3xl md:text-5xl font-extrabold text-darktext mb-6 leading-tight">${judul}</h1>
                                 
-                                <div class="flex items-center gap-6 text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">
-                                    <div class="flex items-center gap-2 font-medium"><div class="w-8 h-8 rounded-full bg-green-100 text-primary flex items-center justify-center"><i class="fas fa-user-edit text-xs"></i></div>${penulis}</div>
-                                    <div class="flex items-center gap-2 font-medium"><i class="far fa-calendar-alt text-gray-400 text-lg"></i>${tanggal}</div>
+                                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-darktext mb-6 leading-tight">${judul}</h1>
+                                
+                                <div class="flex flex-wrap items-center gap-y-3 gap-x-6 text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">
+                                    <div class="flex items-center gap-2 font-medium">
+                                        <div class="w-8 h-8 rounded-full bg-green-50 text-primary flex items-center justify-center border border-green-100 shadow-sm"><i class="fas fa-user-edit text-[10px]"></i></div>
+                                        <span>Oleh <strong class="text-darktext">${penulis}</strong></span>
+                                    </div>
+                                    <div class="flex items-center gap-2 font-medium">
+                                        <i class="far fa-calendar-alt text-accent text-lg"></i>
+                                        <span>Dipublikasikan: <strong class="text-darktext">${tanggal}</strong></span>
+                                    </div>
+                                    <div class="flex items-center gap-2 font-medium bg-gray-100 px-3 py-1 rounded text-xs ml-auto">
+                                        <i class="fas fa-tags text-primary"></i> Berita Utama
+                                    </div>
                                 </div>
 
-                                <img src="${foto}" alt="${judul}" class="w-full h-auto max-h-[450px] object-cover rounded-2xl mb-10 shadow-sm border border-gray-100">
+                                <div class="rounded-3xl overflow-hidden shadow-md border border-gray-100 mb-10 bg-gray-100 relative">
+                                    <img src="${foto}" alt="${judul}" class="w-full h-auto max-h-[500px] object-cover">
+                                </div>
                                 
-                                <div class="prose prose-lg prose-green max-w-none text-gray-600 leading-relaxed text-justify">
+                                <article class="prose prose-lg max-w-none text-gray-700 leading-relaxed text-justify marker:text-primary prose-a:text-primary hover:prose-a:text-green-800 prose-img:rounded-xl">
                                     ${isiBerita}
+                                </article>
+                                
+                                <div class="mt-16 pt-8 border-t border-gray-200 flex justify-between items-center">
+                                    <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Bagikan Berita Ini:</p>
+                                    <div class="flex gap-3">
+                                        <a href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href), 'facebook-share-dialog', 'width=626,height=436'); return false;" class="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-md"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#" onclick="window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(document.title + ' ' + window.location.href)); return false;" class="w-10 h-10 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-md"><i class="fab fa-whatsapp text-lg"></i></a>
+                                    </div>
                                 </div>
                             `;
-                        } else { container.innerHTML = '<p class="text-center text-red-500 py-20 font-bold text-xl">Artikel tidak ditemukan di database.</p>'; }
+                        } else { 
+                            container.innerHTML = '<p class="text-center text-red-500 py-20 font-bold text-xl">Artikel tidak ditemukan di database. Mungkin judul telah diubah.</p>'; 
+                        }
                     }
-                } catch(e) { container.innerHTML = '<p class="text-center text-red-500 py-20">Gagal memuat artikel.</p>'; }
+                } catch(e) { 
+                    container.innerHTML = '<p class="text-center text-red-500 py-20 font-bold">Gagal memuat artikel dari server.</p>'; 
+                }
             }
+            
+            // Eksekusi pemanggilan artikel
             loadArtikel();
         });
     </script>
