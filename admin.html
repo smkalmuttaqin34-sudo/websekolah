@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - SMK AL MUTTAQIN</title>
+    <link rel="icon" href="https://ik.imagekit.io/maihfdgfn5/logo%20smk.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        primary: '#038a47', 
+                        secondary: '#43ad35',
+                        accent: '#fdc600',
+                        darktext: '#3b3d42' 
+                    }, 
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] } 
+                } 
+            } 
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans text-darktext flex h-screen overflow-hidden selection:bg-primary selection:text-white">
+
+    <div id="login-screen" class="absolute inset-0 bg-gray-900 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image: url('https://ik.imagekit.io/maihfdgfn5/gambar%20bg.jpg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-primary/80 to-gray-900/90"></div>
+        
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center relative z-10 border-t-4 border-accent">
+            <img src="https://ik.imagekit.io/maihfdgfn5/logo%20smk.png" alt="Logo SMK" class="w-20 h-20 object-contain mx-auto mb-4 drop-shadow-md">
+            <h2 class="text-2xl font-bold text-primary leading-tight">Admin Panel</h2>
+            <p class="text-[11px] font-bold text-accent tracking-widest uppercase mb-6">SMK AL MUTTAQIN</p>
+            
+            <form id="form-login" class="space-y-5 text-left mt-6">
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-gray-700">Username</label>
+                    <input type="text" id="login-user" required class="w-full border rounded-lg px-4 py-2.5 outline-none bg-gray-50 focus:ring-2 focus:ring-primary transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-gray-700">Password</label>
+                    <input type="password" id="login-pass" required class="w-full border rounded-lg px-4 py-2.5 outline-none bg-gray-50 focus:ring-2 focus:ring-primary transition-all">
+                </div>
+                <div id="login-alert" class="hidden text-center text-sm font-bold text-red-600 bg-red-100 py-2 rounded-lg"></div>
+                <button type="submit" id="btn-login" class="w-full bg-primary text-white font-bold rounded-lg px-4 py-3 hover:bg-green-800 transition shadow-md">Masuk <i class="fas fa-sign-in-alt ml-1"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" class="hidden w-full h-full flex">
+        
+        <aside class="w-64 bg-slate-900 text-gray-300 flex-col hidden md:flex shadow-2xl z-20 border-r-4 border-primary">
+            <div class="p-6 border-b border-white/10 flex items-center gap-3">
+                <img src="https://ik.imagekit.io/maihfdgfn5/logo%20smk.png" alt="Logo" class="w-8 h-8">
+                <div>
+                    <h2 class="text-sm font-bold tracking-widest text-white uppercase">PANEL ADMIN</h2>
+                    <p class="text-[9px] text-accent font-semibold">SMK AL MUTTAQIN</p>
+                </div>
+            </div>
+            
+            <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto custom-scrollbar">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2 px-2">Menu Konten</p>
+                <button onclick="switchTab('berita', this)" class="w-full text-left flex items-center gap-3 bg-primary text-white px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-newspaper w-5"></i> Berita</button>
+                <button onclick="switchTab('pengumuman', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-bullhorn w-5"></i> Pengumuman</button>
+                <button onclick="switchTab('agenda', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-calendar-alt w-5"></i> Agenda</button>
+                <button onclick="switchTab('guru', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-chalkboard-teacher w-5"></i> Guru & Staf</button>
+                <button onclick="switchTab('prestasi', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-medal w-5"></i> Prestasi</button>
+                <button onclick="switchTab('fasilitas', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-building w-5"></i> Fasilitas</button>
+                <button onclick="switchTab('ekskul', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-running w-5"></i> Ekstrakurikuler</button>
+                <button onclick="switchTab('dokumentasi', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn transition"><i class="fas fa-images w-5"></i> Galeri Dokumentasi</button>
+                
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6 px-2">Sistem</p>
+                <button onclick="switchTab('settings', this)" class="w-full text-left flex items-center gap-3 hover:bg-white/10 px-4 py-3 rounded-lg font-medium tab-btn text-yellow-500 hover:text-yellow-400 transition"><i class="fas fa-cogs w-5"></i> API & Cache CF</button>
+            </nav>
+            
+            <div class="p-4 border-t border-white/10 flex flex-col gap-2 bg-slate-950">
+                <a href="index.html" target="_blank" class="flex items-center justify-center gap-2 w-full bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition"><i class="fas fa-external-link-alt text-accent"></i> Buka Web Utama</a>
+                <button onclick="logoutAdmin()" class="flex items-center justify-center gap-2 w-full bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition"><i class="fas fa-power-off"></i> Keluar (Logout)</button>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-gray-50 p-4 md:p-8 relative">
+            
+            <button onclick="toggleMobileMenu()" class="md:hidden bg-white p-3 rounded-lg shadow-sm border border-gray-200 text-primary mb-4 w-fit self-start"><i class="fas fa-bars"></i> Menu Admin</button>
+
+            <div id="global-alert" class="hidden max-w-4xl mx-auto mb-6 p-4 rounded-xl text-sm font-bold flex items-center gap-3 shadow-md border"></div>
+
+            <div id="sec-berita" class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-newspaper text-primary"></i> Kelola Berita / Artikel</h2>
+                <form id="form-berita" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="berita-row">
+                    <div><label class="text-sm font-semibold text-gray-700">Judul Berita</label><input type="text" id="b-judul" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    <div><label class="text-sm font-semibold text-gray-700">Ringkasan (Tampil di depan)</label><textarea id="b-ringkasan" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" rows="2"></textarea></div>
+                    
+                    <div>
+                        <label class="text-sm font-semibold text-gray-700">Isi Berita / Artikel Lengkap</label>
+                        <p class="text-[11px] text-gray-500 mb-1">Gunakan tombol Enter untuk membuat paragraf baru.</p>
+                        <textarea id="b-isi" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" rows="8"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Tanggal</label><input type="text" id="b-tanggal" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" placeholder="Misal: 15 Agu 2026"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">Penulis</label><input type="text" id="b-penulis" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" placeholder="Misal: Admin"></div>
+                    </div>
+                    <div><label class="text-sm font-semibold text-gray-700">Link / URL Eksternal (Opsional)</label><input type="url" id="b-link" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" placeholder="https://... (Isi jika sumber berita dari luar)"></div>
+                    
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <label class="text-sm font-bold text-primary flex items-center gap-2"><i class="fas fa-cloud-upload-alt"></i> Upload Gambar (ImageKit)</label>
+                        <input type="file" accept="image/*" onchange="uploadKeImageKit(this, 'b-foto')" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-primary hover:file:text-white transition-colors mt-3 cursor-pointer">
+                        <p class="text-[11px] text-gray-500 mt-3 mb-1">Link URL Foto (Bisa diisi manual atau otomatis terisi setelah upload):</p>
+                        <input type="url" id="b-foto" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-500 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-berita" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Berita</button>
+                        <button type="button" id="cancel-berita" onclick="batalEdit('berita')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Daftar Berita Tersimpan</h3>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Judul Berita</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-berita" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-pengumuman" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-bullhorn text-primary"></i> Kelola Pengumuman & Poster</h2>
+                <form id="form-pengumuman" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="pengumuman-row">
+                    <div><label class="text-sm font-semibold text-gray-700">Judul Pengumuman</label><input type="text" id="p-judul" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    <div><label class="text-sm font-semibold text-gray-700">Tanggal</label><input type="text" id="p-tanggal" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <label class="text-sm font-bold text-primary flex items-center gap-2"><i class="fas fa-cloud-upload-alt"></i> Upload Poster / Gambar / PDF</label>
+                        <input type="file" accept="image/*,application/pdf" onchange="uploadKeImageKit(this, 'p-link')" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-primary hover:file:text-white transition-colors mt-3 cursor-pointer">
+                        <p class="text-[11px] text-gray-500 mt-3 mb-1">Link File / Gambar (Otomatis terisi setelah upload):</p>
+                        <input type="url" id="p-link" required class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-500 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-pengumuman" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Pengumuman</button>
+                        <button type="button" id="cancel-pengumuman" onclick="batalEdit('pengumuman')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Judul Pengumuman</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-pengumuman" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-agenda" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-calendar-alt text-primary"></i> Kelola Agenda Kegiatan</h2>
+                <form id="form-agenda" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="agenda-row">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Tgl (Angka, cth: 15)</label><input type="text" id="a-tgl" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">Bulan & Tahun (cth: Agus 2026)</label><input type="text" id="a-bln" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    </div>
+                    <div><label class="text-sm font-semibold text-gray-700">Nama Acara</label><input type="text" id="a-nama" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Waktu (cth: 08.00 WIB)</label><input type="text" id="a-waktu" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">Lokasi (cth: Lapangan Utama)</label><input type="text" id="a-lokasi" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-agenda" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Agenda</button>
+                        <button type="button" id="cancel-agenda" onclick="batalEdit('agenda')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Nama Acara</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-agenda" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-guru" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-chalkboard-teacher text-primary"></i> Kelola Data Guru & Staf</h2>
+                <form id="form-guru" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="guru-row">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Nama Lengkap & Gelar</label><input type="text" id="g-nama" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">Jabatan / Posisi</label><input type="text" id="g-jabatan" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Email (Opsional)</label><input type="email" id="g-email" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">No. WhatsApp (Opsional)</label><input type="text" id="g-tlp" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" placeholder="Cth: 0812345678"></div>
+                    </div>
+                    
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <label class="text-sm font-bold text-primary flex items-center gap-2"><i class="fas fa-camera"></i> Upload Foto Profil (ImageKit)</label>
+                        <input type="file" accept="image/*" onchange="uploadKeImageKit(this, 'g-foto')" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-primary hover:file:text-white transition-colors mt-3 cursor-pointer">
+                        <p class="text-[11px] text-gray-500 mt-3 mb-1">Link Foto (Akan terisi otomatis jika upload, atau ketik manual):</p>
+                        <input type="url" id="g-foto" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-500 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-guru" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Profil</button>
+                        <button type="button" id="cancel-guru" onclick="batalEdit('guru')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Nama Guru / Staf</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-guru" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-prestasi" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-medal text-primary"></i> Kelola Prestasi Taruna</h2>
+                <form id="form-prestasi" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="prestasi-row">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Nama Taruna/i</label><input type="text" id="pr-nama" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">Judul Prestasi / Lomba</label><input type="text" id="pr-judul" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Peringkat (Cth: Juara 1)</label><input type="text" id="pr-peringkat" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">Bidang (Cth: Olahraga)</label><input type="text" id="pr-bidang" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="text-sm font-semibold text-gray-700">Kategori (Cth: Nasional)</label><input type="text" id="pr-kategori" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    </div>
+                    
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <label class="text-sm font-bold text-primary flex items-center gap-2"><i class="fas fa-camera"></i> Upload Foto (ImageKit)</label>
+                        <input type="file" accept="image/*" onchange="uploadKeImageKit(this, 'pr-foto')" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-primary hover:file:text-white transition-colors mt-3 cursor-pointer">
+                        <p class="text-[11px] text-gray-500 mt-3 mb-1">Link URL Foto:</p>
+                        <input type="url" id="pr-foto" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-500 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-prestasi" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Prestasi</button>
+                        <button type="button" id="cancel-prestasi" onclick="batalEdit('prestasi')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Nama Taruna & Prestasi</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-prestasi" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-fasilitas" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-building text-primary"></i> Kelola Fasilitas</h2>
+                <form id="form-fasilitas" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="fasilitas-row">
+                    <div><label class="text-sm font-semibold text-gray-700">Nama Fasilitas Ruangan / Gedung</label><input type="text" id="f-nama" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    <div><label class="text-sm font-semibold text-gray-700">Link Tujuan (Opsional, jika diklik)</label><input type="text" id="f-link" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" placeholder="Cth: fasilitas.html"></div>
+                    
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <label class="text-sm font-bold text-primary flex items-center gap-2"><i class="fas fa-camera"></i> Upload Foto Ruangan (ImageKit)</label>
+                        <input type="file" accept="image/*" onchange="uploadKeImageKit(this, 'f-foto')" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-primary hover:file:text-white transition-colors mt-3 cursor-pointer">
+                        <p class="text-[11px] text-gray-500 mt-3 mb-1">Link URL Foto:</p>
+                        <input type="url" id="f-foto" required class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-500 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-fasilitas" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Fasilitas</button>
+                        <button type="button" id="cancel-fasilitas" onclick="batalEdit('fasilitas')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Nama Fasilitas</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-fasilitas" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-ekskul" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-running text-primary"></i> Kelola Ekstrakurikuler</h2>
+                <form id="form-ekskul" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="ekskul-row">
+                    <div><label class="text-sm font-semibold text-gray-700">Nama Ekstrakurikuler</label><input type="text" id="e-nama" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                    <div><label class="text-sm font-semibold text-gray-700">Deskripsi Singkat</label><textarea id="e-deskripsi" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" rows="3"></textarea></div>
+                    
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <label class="text-sm font-bold text-primary flex items-center gap-2"><i class="fas fa-camera"></i> Upload Foto Kegiatan (ImageKit)</label>
+                        <input type="file" accept="image/*" onchange="uploadKeImageKit(this, 'e-foto')" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-primary hover:file:text-white transition-colors mt-3 cursor-pointer">
+                        <p class="text-[11px] text-gray-500 mt-3 mb-1">Link URL Foto:</p>
+                        <input type="url" id="e-foto" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-500 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-ekskul" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Data Ekskul</button>
+                        <button type="button" id="cancel-ekskul" onclick="batalEdit('ekskul')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Nama Ekstrakurikuler</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-ekskul" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-dokumentasi" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 tab-content">
+                <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-images text-primary"></i> Kelola Galeri Dokumentasi</h2>
+                <form id="form-dokumentasi" class="space-y-4 mb-10 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <input type="hidden" id="dokumentasi-row">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="text-sm font-semibold text-gray-700">Judul Foto / Kegiatan</label><input type="text" id="d-judul" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div>
+                            <label class="text-sm font-semibold text-gray-700">Kategori (Untuk Filter Tab)</label>
+                            <input type="text" id="d-kategori" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mt-1 focus:ring-2 focus:ring-primary outline-none" placeholder="Cth: Perlombaan, Pelantikan, Harian">
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <label class="text-sm font-bold text-primary flex items-center gap-2"><i class="fas fa-camera"></i> Upload Dokumentasi (ImageKit)</label>
+                        <input type="file" accept="image/*" onchange="uploadKeImageKit(this, 'd-foto')" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-primary hover:file:text-white transition-colors mt-3 cursor-pointer">
+                        <p class="text-[11px] text-gray-500 mt-3 mb-1">Link URL Foto:</p>
+                        <input type="url" id="d-foto" required class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-500 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 mt-6 pt-2">
+                        <button type="submit" id="btn-dokumentasi" class="bg-primary text-white font-bold rounded-lg px-6 py-2.5 flex-grow shadow-md hover:bg-green-700 transition">Simpan Foto</button>
+                        <button type="button" id="cancel-dokumentasi" onclick="batalEdit('dokumentasi')" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg px-6 py-2.5 transition">Batal Edit</button>
+                    </div>
+                </form>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-sm text-left"><thead class="bg-gray-50 border-b"><tr><th class="p-3 font-semibold text-gray-600">Judul Foto / Kategori</th><th class="p-3 font-semibold text-gray-600 w-32 text-center">Aksi</th></tr></thead><tbody id="tbl-dokumentasi" class="divide-y divide-gray-100"></tbody></table>
+                </div>
+            </div>
+
+            <div id="sec-settings" class="hidden max-w-4xl mx-auto tab-content">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <h2 class="text-xl font-bold text-darktext mb-6 border-b pb-3 flex items-center gap-2"><i class="fas fa-cogs text-yellow-500"></i> Pengaturan API Key & ImageKit</h2>
+                    <form id="form-settings" class="space-y-5 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div><label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 block">Cloudflare Zone ID</label><input type="text" id="set-cf-zone" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 font-mono text-sm outline-none focus:ring-2 focus:ring-yellow-500"></div>
+                            <div><label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 block">Cloudflare API Token</label><input type="password" id="set-cf-token" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 font-mono text-sm outline-none focus:ring-2 focus:ring-yellow-500"></div>
+                        </div>
+                        <div><label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 block">ImageKit Private Key</label><input type="password" id="set-ik-private" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 font-mono text-sm outline-none focus:ring-2 focus:ring-yellow-500" placeholder="private_..."></div>
+                        <button type="submit" id="btn-settings" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-lg px-6 py-3 w-full mt-4 shadow-md transition"><i class="fas fa-save mr-1"></i> Simpan Pengaturan ke Sheets</button>
+                    </form>
+                </div>
+
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl shadow-sm border border-yellow-200 p-6 md:p-8 relative overflow-hidden">
+                    <i class="fas fa-bolt absolute -right-6 -bottom-6 text-9xl text-yellow-500 opacity-10"></i>
+                    <h2 class="text-xl font-bold text-yellow-800 mb-2 flex items-center gap-2 relative z-10"><i class="fas fa-broom"></i> Bersihkan Cache Server (Purge CF)</h2>
+                    <p class="text-sm text-yellow-700 mb-6 relative z-10">Gunakan tombol ini jika Anda sudah meng-update data di panel ini, tetapi tampilan website bagian depan (Beranda/Publik) belum berubah atau masih memunculkan data lama.</p>
+                    <button onclick="purgeCF(this)" class="w-full md:w-auto bg-yellow-500 text-white font-bold rounded-lg px-8 py-3 hover:bg-yellow-600 shadow-md transition relative z-10">Jalankan Purge CF Sekarang</button>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script>
+        // BOS: GANTI URL API SCRIPT INI DENGAN MILIK SMK AL MUTTAQIN JIKA SUDAH DI-DEPLOY!
+        const BASE_API_URL = 'https://script.google.com/macros/s/AKfycbyOgCidAVWi8PnKS2vJ7yfNizYVPVy5QtULRg7a35CYlqJIY2spc805j7QFhpZ6E9la-w/exec'; 
+        const SPREADSHEET_ID = '1lBKfUdhNqfC4G-ITNt9ecPAoi-BX_mZP2gLAvxxAxDY'; // Sudah disesuaikan dengan ID SMK Al Muttaqin
+        
+        let activeUser = sessionStorage.getItem('adminUser');
+        let activePass = sessionStorage.getItem('adminPass');
+
+        if (activeUser && activePass) showDashboard();
+
+        // Menu Mobile Toggle untuk Sidebar Admin
+        function toggleMobileMenu() {
+            const sidebar = document.querySelector('aside');
+            if (sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('flex', 'absolute', 'h-full');
+            } else {
+                sidebar.classList.add('hidden');
+                sidebar.classList.remove('flex', 'absolute', 'h-full');
+            }
+        }
+
+        // Navigasi Tab Admin
+        function switchTab(tabName, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('sec-' + tabName).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab-btn').forEach(el => { 
+                el.classList.remove('bg-primary', 'text-white', 'shadow-md'); 
+                if(el.innerText.includes('Sistem')) {
+                    el.classList.add('text-yellow-500', 'hover:bg-white/10');
+                } else {
+                    el.classList.add('hover:bg-white/10');
+                }
+            });
+            
+            btnElement.classList.add('bg-primary', 'text-white', 'shadow-md'); 
+            btnElement.classList.remove('hover:bg-white/10', 'text-yellow-500');
+            
+            hideAlert();
+            
+            // Tutup sidebar di HP setelah klik menu
+            if(window.innerWidth < 768) { document.querySelector('aside').classList.add('hidden'); }
+            
+            if(tabName === 'settings') { loadSettings(); } 
+            else { batalEdit(tabName); loadTabel(tabName); }
+        }
+
+        function showAlert(pesan, type) {
+            const box = document.getElementById('global-alert');
+            box.className = `max-w-4xl mx-auto mb-6 p-4 rounded-xl text-sm font-bold flex items-center gap-3 shadow-md border ${type === 'success' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-red-50 text-red-700 border-red-200'}`;
+            box.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle text-xl' : 'fa-times-circle text-xl'}"></i> <span>${pesan}</span>`;
+            box.classList.remove('hidden'); setTimeout(hideAlert, 5000);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        function hideAlert() { document.getElementById('global-alert').classList.add('hidden'); }
+
+        async function kirimData(action, dataObj, btnElement) {
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Memproses...'; 
+            btnElement.disabled = true; hideAlert();
+
+            const fd = new FormData();
+            fd.append('action', action); fd.append('username', activeUser); fd.append('password', activePass);
+            for (let key in dataObj) { fd.append(key, dataObj[key]); }
+
+            try {
+                const res = await fetch(BASE_API_URL, { method: 'POST', body: fd });
+                const result = await res.json();
+                if (result.status === 'success') { showAlert(result.pesan, 'success'); return true; } 
+                else { showAlert(result.pesan, 'error'); return false; }
+            } catch (err) { showAlert("Koneksi Error. Pastikan URL Script benar.", 'error'); return false;}
+            finally { btnElement.innerHTML = originalText; btnElement.disabled = false; }
+        }
+
+        // --- UPLOAD IMAGEKIT ---
+        async function uploadKeImageKit(fileInput, targetId) {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const targetEl = document.getElementById(targetId);
+            const originalVal = targetEl.value;
+            targetEl.value = "Sedang mengunggah file... Mohon tunggu.";
+            fileInput.disabled = true;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async function () {
+                const base64String = reader.result.split(',')[1];
+                const fd = new FormData();
+                fd.append('action', 'upload_image'); fd.append('username', activeUser); fd.append('password', activePass);
+                fd.append('fileBase64', base64String); fd.append('fileName', file.name.replace(/[^a-zA-Z0-9.]/g, "_"));
+
+                try {
+                    const res = await fetch(BASE_API_URL, { method: 'POST', body: fd });
+                    const result = await res.json();
+                    if (result.status === 'success') { targetEl.value = result.url; showAlert('File berhasil diunggah dan disimpan ke server!', 'success'); } 
+                    else { targetEl.value = originalVal; showAlert(result.pesan, 'error'); }
+                } catch (err) { targetEl.value = originalVal; showAlert('Gagal upload. Cek setting API key.', 'error'); }
+                fileInput.disabled = false; fileInput.value = '';
+            };
+        }
+
+        async function loadSettings() {
+            const btn = document.getElementById('btn-settings'); btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Mengambil data...';
+            try {
+                const fd = new FormData(); fd.append('action', 'get_settings'); fd.append('username', activeUser); fd.append('password', activePass);
+                const res = await fetch(BASE_API_URL, { method: 'POST', body: fd }); const result = await res.json();
+                if (result.status === 'success') {
+                    document.getElementById('set-cf-zone').value = result.data.CF_ZONE_ID || '';
+                    document.getElementById('set-cf-token').value = result.data.CF_API_TOKEN || '';
+                    document.getElementById('set-ik-private').value = result.data.IK_PRIVATE_KEY || '';
+                }
+            } catch(e){}
+            btn.innerHTML = '<i class="fas fa-save mr-1"></i> Simpan Pengaturan ke Sheets';
+        }
+
+        document.getElementById('form-settings').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const dataObj = { cf_zone: document.getElementById('set-cf-zone').value, cf_token: document.getElementById('set-cf-token').value, ik_private: document.getElementById('set-ik-private').value };
+            await kirimData('save_settings', dataObj, document.getElementById('btn-settings'));
+        });
+
+        // --- FUNGSI LOAD TABEL GVIZ ---
+        async function loadTabel(sheetCode) {
+            const sheetNames = { 'berita':'Berita', 'pengumuman':'Pengumuman', 'agenda':'Agenda', 'guru':'Guru', 'prestasi':'Prestasi', 'fasilitas':'Fasilitas', 'ekskul':'Ekstrakurikuler', 'dokumentasi':'Dokumentasi' };
+            const sheet = sheetNames[sheetCode];
+            const tbody = document.getElementById('tbl-' + sheetCode);
+            tbody.innerHTML = '<tr><td colspan="2" class="p-8 text-center text-gray-500 font-medium"><i class="fas fa-circle-notch fa-spin text-primary mr-2"></i> Memuat data dari server...</td></tr>';
+            
+            try {
+                const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${sheet}`;
+                const response = await fetch(url);
+                const text = await response.text();
+                
+                const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                const json = JSON.parse(jsonString);
+                
+                let html = '';
+                if (json.table.rows && json.table.rows.length > 0) {
+                    const headers = json.table.cols.map(c => c && c.label ? c.label.trim() : '');
+                    let dataRows = [];
+                    
+                    for (let i = 0; i < json.table.rows.length; i++) {
+                        let rowData = json.table.rows[i].c;
+                        if (!rowData || rowData.length === 0 || (!rowData[0] && !rowData[1])) continue; 
+                        
+                        let item = { _row: i + 2 }; 
+                        for (let j = 0; j < headers.length; j++) {
+                            if (headers[j]) { item[headers[j]] = rowData[j] ? (rowData[j].f || rowData[j].v || "") : ""; }
+                        }
+                        dataRows.push(item);
+                    }
+                    
+                    // Guru tidak di-reverse (biar kepsek diatas), sisanya di-reverse
+                    if(sheetCode !== 'guru') { dataRows.reverse(); }
+
+                    dataRows.forEach(item => {
+                        const title = item.Judul || item.judul || item['Judul Berita'] || item.NamaAcara || item.Nama;
+                        const subtitel = item.Jabatan || item.Kategori || item.Tanggal || '';
+                        const dataJSON = encodeURIComponent(JSON.stringify(item));
+                        html += `<tr class="border-b hover:bg-green-50/50 transition-colors">
+                            <td class="p-3">
+                                <div class="font-bold text-gray-700">${title}</div>
+                                ${subtitel ? `<div class="text-[11px] text-gray-500 uppercase tracking-widest mt-0.5">${subtitel}</div>` : ''}
+                            </td>
+                            <td class="p-3 text-center space-x-2">
+                                <button onclick="siapkanEdit('${sheetCode}', '${dataJSON}')" class="bg-blue-100 hover:bg-blue-600 text-blue-600 hover:text-white px-3 py-1.5 rounded-md text-xs font-bold transition-colors"><i class="fas fa-edit"></i> Edit</button>
+                                <button onclick="hapusData('${sheet}', '${sheetCode}', ${item._row})" class="bg-red-100 hover:bg-red-600 text-red-600 hover:text-white px-3 py-1.5 rounded-md text-xs font-bold transition-colors"><i class="fas fa-trash"></i> Hapus</button>
+                            </td>
+                        </tr>`;
+                    });
+                    tbody.innerHTML = html;
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="2" class="p-8 text-center italic text-gray-400">Belum ada data tersimpan di kategori ini.</td></tr>';
+                }
+            } catch (e) { 
+                console.error(e);
+                tbody.innerHTML = '<tr><td colspan="2" class="p-4 text-center text-red-500 font-bold"><i class="fas fa-exclamation-triangle"></i> Gagal memuat data. Cek Spreadsheet ID / Share Akses.</td></tr>'; 
+            }
+        }
+
+        async function hapusData(sheetName, sheetCode, rowId) {
+            if(!confirm(`PERINGATAN: Yakin ingin MENGHAPUS data ini selamanya dari database?`)) return;
+            // Gunakan dummy element karena tombolnya digenerate dinamis
+            const dummyBtn = document.createElement('button'); 
+            const sukses = await kirimData('delete_data', { sheet: sheetName, row: rowId }, dummyBtn);
+            if(sukses) loadTabel(sheetCode);
+        }
+
+        // --- PREFILL FORM EDIT ---
+        function siapkanEdit(tab, dataJSON) {
+            const data = JSON.parse(decodeURIComponent(dataJSON));
+            document.getElementById(tab+'-row').value = data._row; 
+            
+            const btnSimpan = document.getElementById('btn-'+tab);
+            btnSimpan.innerText = "Update Data (Timpa)"; 
+            btnSimpan.classList.replace('bg-primary', 'bg-blue-600'); 
+            btnSimpan.classList.replace('hover:bg-green-700', 'hover:bg-blue-700'); 
+            document.getElementById('cancel-'+tab).classList.remove('hidden');
+            
+            if(tab === 'berita') { 
+                document.getElementById('b-judul').value = data.Judul || data.judul || data['Judul Berita'] || ''; 
+                document.getElementById('b-ringkasan').value = data.Ringkasan || data.ringkasan || data.Deskripsi || ''; 
+                document.getElementById('b-isi').value = data['Isi Berita'] || data.Isi || data.isi || '';  
+                document.getElementById('b-tanggal').value = data.Tanggal || data.tanggal || ''; 
+                document.getElementById('b-penulis').value = data.Penulis || data.penulis || ''; 
+                document.getElementById('b-link').value = data.Link || data.URL || data.Url || data.Tautan || ''; 
+                document.getElementById('b-foto').value = data.Foto || data['Link Foto'] || ''; 
+            }
+            if(tab === 'pengumuman') { document.getElementById('p-judul').value = data.Judul||''; document.getElementById('p-tanggal').value = data.Tanggal||''; document.getElementById('p-link').value = data['Link PDF']||data.Foto||data.Link||''; }
+            if(tab === 'agenda') { document.getElementById('a-tgl').value = data.Tanggal||''; document.getElementById('a-bln').value = data.BulanTahun||''; document.getElementById('a-nama').value = data.NamaAcara||''; document.getElementById('a-waktu').value = data.Waktu||''; document.getElementById('a-lokasi').value = data.Lokasi||'';}
+            if(tab === 'guru') { document.getElementById('g-nama').value = data.Nama||''; document.getElementById('g-jabatan').value = data.Jabatan||''; document.getElementById('g-foto').value = data.Foto || data['Link Foto']||''; document.getElementById('g-email').value = data.Email||''; document.getElementById('g-tlp').value = data.Telepon||data.NoHP||'';}
+            if(tab === 'prestasi') { document.getElementById('pr-nama').value = data.Nama||''; document.getElementById('pr-judul').value = data.JudulLomba || data['Judul Lomba']||''; document.getElementById('pr-peringkat').value = data.Peringkat||''; document.getElementById('pr-bidang').value = data.Bidang||''; document.getElementById('pr-kategori').value = data.Kategori||''; document.getElementById('pr-foto').value = data.Foto||data['Link Foto']||'';}
+            if(tab === 'fasilitas') { document.getElementById('f-nama').value = data.Nama||''; document.getElementById('f-link').value = data.Link||''; document.getElementById('f-foto').value = data.Foto||''; }
+            if(tab === 'ekskul') { document.getElementById('e-nama').value = data.Nama||''; document.getElementById('e-deskripsi').value = data.Deskripsi||''; document.getElementById('e-foto').value = data.Foto||''; }
+            if(tab === 'dokumentasi') { document.getElementById('d-judul').value = data.Judul||''; document.getElementById('d-kategori').value = data.Kategori||''; document.getElementById('d-foto').value = data.Foto||data['Link Foto']||data.Gambar||''; }
+            
+            window.scrollTo({top: 0, behavior: 'smooth'}); 
+        }
+
+        function batalEdit(tab) { 
+            document.getElementById('form-'+tab).reset(); 
+            document.getElementById(tab+'-row').value = ''; 
+            
+            const btnSimpan = document.getElementById('btn-'+tab);
+            btnSimpan.innerText = "Simpan Data Baru"; 
+            btnSimpan.classList.replace('bg-blue-600', 'bg-primary'); 
+            btnSimpan.classList.replace('hover:bg-blue-700', 'hover:bg-green-700'); 
+            document.getElementById('cancel-'+tab).classList.add('hidden'); 
+        }
+
+        // --- FUNGSI MENGAMBIL DATA INPUTAN & SUBMIT ---
+        function handleFormSubmit(tab, buildDataObj) {
+            document.getElementById('form-'+tab).addEventListener('submit', async function(e) {
+                e.preventDefault(); 
+                const rowId = document.getElementById(tab+'-row').value; 
+                const action = rowId ? `update_${tab}` : `insert_${tab}`; 
+                
+                const dataObj = buildDataObj(); 
+                if(rowId) dataObj.row = rowId;
+                
+                const sukses = await kirimData(action, dataObj, document.getElementById('btn-'+tab)); 
+                if(sukses) { batalEdit(tab); loadTabel(tab); }
+            });
+        }
+
+        // --- MAPPING DATA KE GOOGLE SCRIPT ---
+        handleFormSubmit('berita', () => ({ judul: document.getElementById('b-judul').value, ringkasan: document.getElementById('b-ringkasan').value, isi_berita: document.getElementById('b-isi').value, tanggal: document.getElementById('b-tanggal').value, penulis: document.getElementById('b-penulis').value, link: document.getElementById('b-link').value, foto: document.getElementById('b-foto').value }));
+        handleFormSubmit('pengumuman', () => ({ judul: document.getElementById('p-judul').value, tanggal: document.getElementById('p-tanggal').value, ringkasan: 'Pengumuman / Poster', linkpdf: document.getElementById('p-link').value }));
+        handleFormSubmit('agenda', () => ({ tanggal: document.getElementById('a-tgl').value, bulantahun: document.getElementById('a-bln').value, namaacara: document.getElementById('a-nama').value, waktu: document.getElementById('a-waktu').value, lokasi: document.getElementById('a-lokasi').value }));
+        handleFormSubmit('guru', () => ({ nama: document.getElementById('g-nama').value, jabatan: document.getElementById('g-jabatan').value, foto: document.getElementById('g-foto').value, email: document.getElementById('g-email').value, telepon: document.getElementById('g-tlp').value }));
+        handleFormSubmit('prestasi', () => ({ nama: document.getElementById('pr-nama').value, judul_lomba: document.getElementById('pr-judul').value, peringkat: document.getElementById('pr-peringkat').value, bidang: document.getElementById('pr-bidang').value, kategori: document.getElementById('pr-kategori').value, foto: document.getElementById('pr-foto').value }));
+        handleFormSubmit('fasilitas', () => ({ nama: document.getElementById('f-nama').value, link: document.getElementById('f-link').value, foto: document.getElementById('f-foto').value }));
+        handleFormSubmit('ekskul', () => ({ nama: document.getElementById('e-nama').value, deskripsi: document.getElementById('e-deskripsi').value, foto: document.getElementById('e-foto').value }));
+        handleFormSubmit('dokumentasi', () => ({ judul: document.getElementById('d-judul').value, kategori: document.getElementById('d-kategori').value, foto: document.getElementById('d-foto').value }));
+
+        async function purgeCF(btn) { await kirimData('purge_cf', {}, btn); }
+
+        // --- SISTEM LOGIN ---
+        document.getElementById('form-login').addEventListener('submit', async function(e) {
+            e.preventDefault(); const u = document.getElementById('login-user').value; const p = document.getElementById('login-pass').value;
+            const btn = document.getElementById('btn-login'); const alertBox = document.getElementById('login-alert'); 
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Validasi...'; btn.disabled = true; alertBox.classList.add('hidden');
+            
+            const fd = new FormData(); fd.append('action', 'login'); fd.append('username', u); fd.append('password', p);
+            try { 
+                const res = await fetch(BASE_API_URL, { method: 'POST', body: fd }); const result = await res.json();
+                if (result.status === 'success') { 
+                    sessionStorage.setItem('adminUser', u); sessionStorage.setItem('adminPass', p); 
+                    activeUser = u; activePass = p; showDashboard(); 
+                } else { alertBox.classList.remove('hidden'); alertBox.innerText = result.pesan; }
+            } catch(e) { alertBox.classList.remove('hidden'); alertBox.innerText = "Error API URL Google Script belum terhubung."; }
+            btn.innerHTML = 'Masuk <i class="fas fa-sign-in-alt ml-1"></i>'; btn.disabled = false;
+        });
+
+        function showDashboard() { 
+            document.getElementById('login-screen').classList.add('hidden'); 
+            document.getElementById('dashboard-screen').classList.remove('hidden'); 
+            switchTab('berita', document.querySelector('.tab-btn'));
+        }
+        function logoutAdmin() { sessionStorage.clear(); location.reload(); }
+    </script>
+</body>
+</html>
