@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baca Berita - SMK ALMUTTAQIN</title>
+    <link rel="icon" href="https://ik.imagekit.io/maihfdgfn5/logobutuhanremove_wdo1Icl6Y.png?updatedAt=1768833203647">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { primary: '#038a47', secondary: '#43ad35', accent: '#fdc600', darktext: '#3b3d42' }, fontFamily: { sans: ['Poppins', 'sans-serif'] } } } }
+    </script>
+</head>
+<body class="bg-gray-50 text-darktext font-sans antialiased overflow-x-hidden">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50 relative">
+        <div class="max-w-[1200px] mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <img src="https://ik.imagekit.io/maihfdgfn5/ChatGPT_Image_26_Mar_2026__12.38.51-removebg-preview.png" alt="Logo SDN 2 Butuhan" class="h-10 md:h-12 w-auto object-contain">
+            </a>
+            <div class="hidden lg:flex gap-7 text-[15px] font-medium text-gray-600 items-center">
+                <a href="index.html" class="hover:text-primary transition">Beranda</a>
+                <a href="berita.html" class="text-primary border-b-2 border-primary pb-1">Berita</a>
+            </div>
+            <a href="index.html" class="bg-gray-100 text-gray-600 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-primary hover:text-white transition"><i class="fas fa-home mr-2"></i>Kembali</a>
+        </div>
+    </nav>
+
+    <main class="bg-white py-12 px-4 min-h-[75vh]">
+        <div class="max-w-[800px] mx-auto" id="artikel-container">
+            <div class="text-center py-32 text-gray-400">
+                <i class="fas fa-spinner fa-spin text-5xl mb-4 text-primary"></i>
+                <p class="font-medium">Mempersiapkan artikel...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 py-8 text-center text-sm text-gray-500 font-medium">
+        &copy; <script>document.write(new Date().getFullYear())</script> SD NEGERI 2 BUTUHAN. All Rights Reserved.
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const SPREADSHEET_ID = '1iaxYuPTGrRSvg9P3AmAgnCj7xGvFi75pqTImB6lSl2c';
+
+            async function gvizFetch(sheetName) {
+                try {
+                    const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${sheetName}`;
+                    const res = await fetch(url);
+                    const text = await res.text();
+                    const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+                    const headers = json.table.cols.map(c => c && c.label ? c.label.trim() : '');
+                    let dataRows = [];
+                    for (let i = 0; i < json.table.rows.length; i++) {
+                        let rowData = json.table.rows[i].c;
+                        if (!rowData || rowData.length === 0 || (!rowData[0] && !rowData[1])) continue; 
+                        let item = {};
+                        for (let j = 0; j < headers.length; j++) { if (headers[j]) { item[headers[j]] = rowData[j] ? (rowData[j].f || rowData[j].v || "") : ""; } }
+                        dataRows.push(item);
+                    }
+                    return { status: "success", data: dataRows.reverse() };
+                } catch (e) { return { status: "error", data: [] }; }
+            }
+
+            async function loadArtikel() {
+                const container = document.getElementById('artikel-container');
+                const urlParams = new URLSearchParams(window.location.search);
+                const judulParam = urlParams.get('judul');
+
+                if(!judulParam) { container.innerHTML = '<p class="text-center text-red-500 py-20 font-bold text-xl">Artikel tidak ditemukan.</p>'; return; }
+
+                try {
+                    const result = await gvizFetch("Berita");
+                    if(result.status === "success") {
+                        // Cari baris berita yang judulnya cocok dengan URL
+                        const artikel = result.data.find(item => {
+                            const jdl = item.Judul || item.judul || item['Judul Berita'] || "";
+                            return jdl === judulParam;
+                        });
+
+                        if(artikel) {
+                            const judul = artikel.Judul || artikel.judul || "Tanpa Judul";
+                            const penulis = artikel.Penulis || artikel.penulis || "Admin";
+                            let tanggal = artikel.Tanggal || artikel.tanggal || "-";
+                            if(tanggal !== "-") { const d = new Date(tanggal); if(!isNaN(d)) tanggal = d.toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'}); }
+                            
+                            // AMBIL ISI BERITA DAN UBAH ENTER JADI PARAGRAF BARU
+                            let isiBerita = artikel['Isi Berita'] || artikel.Isi || artikel.isi || artikel.Ringkasan || "Konten belum ditambahkan.";
+                            isiBerita = isiBerita.replace(/\n/g, '<br><br>');
+
+                            const foto = artikel.Foto || artikel.foto || artikel['Link Foto'] || "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=800&auto=format&fit=crop";
+
+                            container.innerHTML = `
+                                <div class="mb-6">
+                                    <a href="berita.html" class="text-primary font-semibold hover:underline flex items-center gap-2"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Berita</a>
+                                </div>
+                                <h1 class="text-3xl md:text-5xl font-extrabold text-darktext mb-6 leading-tight">${judul}</h1>
+                                
+                                <div class="flex items-center gap-6 text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">
+                                    <div class="flex items-center gap-2 font-medium"><div class="w-8 h-8 rounded-full bg-green-100 text-primary flex items-center justify-center"><i class="fas fa-user-edit text-xs"></i></div>${penulis}</div>
+                                    <div class="flex items-center gap-2 font-medium"><i class="far fa-calendar-alt text-gray-400 text-lg"></i>${tanggal}</div>
+                                </div>
+
+                                <img src="${foto}" alt="${judul}" class="w-full h-auto max-h-[450px] object-cover rounded-2xl mb-10 shadow-sm border border-gray-100">
+                                
+                                <div class="prose prose-lg prose-green max-w-none text-gray-600 leading-relaxed text-justify">
+                                    ${isiBerita}
+                                </div>
+                            `;
+                        } else { container.innerHTML = '<p class="text-center text-red-500 py-20 font-bold text-xl">Artikel tidak ditemukan di database.</p>'; }
+                    }
+                } catch(e) { container.innerHTML = '<p class="text-center text-red-500 py-20">Gagal memuat artikel.</p>'; }
+            }
+            loadArtikel();
+        });
+    </script>
+</body>
+</html>
